@@ -1,0 +1,4 @@
+pytest
+chispa>=0.10.1
+databricks-cli
+pyspark

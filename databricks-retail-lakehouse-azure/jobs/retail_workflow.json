@@ -1,0 +1,49 @@
+{
+  "name": "retail_orders_pipeline",
+  "tasks": [
+    {
+      "task_key": "bronze_orders",
+      "notebook_task": {
+        "notebook_path": "/Repos/<owner>/<repo>/notebooks/01_bronze_ingest_orders_autoloader.py"
+      },
+      "job_cluster_key": "job_cluster"
+    },
+    {
+      "task_key": "silver",
+      "depends_on": [
+        {
+          "task_key": "bronze_orders"
+        }
+      ],
+      "notebook_task": {
+        "notebook_path": "/Repos/<owner>/<repo>/notebooks/02_silver_transformations.py"
+      },
+      "job_cluster_key": "job_cluster"
+    },
+    {
+      "task_key": "gold",
+      "depends_on": [
+        {
+          "task_key": "silver"
+        }
+      ],
+      "sql_task": {
+        "file": "/Repos/<owner>/<repo>/notebooks/03_gold_marts.sql"
+      },
+      "job_cluster_key": "job_cluster"
+    }
+  ],
+  "job_clusters": [
+    {
+      "job_cluster_key": "job_cluster",
+      "new_cluster": {
+        "spark_version": "15.4.x-scala2.12",
+        "node_type_id": "Standard_D4ds_v5",
+        "num_workers": 2,
+        "data_security_mode": "SINGLE_USER",
+        "enable_elastic_disk": true,
+        "runtime_engine": "PHOTON"
+      }
+    }
+  ]
+}

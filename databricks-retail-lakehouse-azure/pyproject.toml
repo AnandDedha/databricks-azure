@@ -1,0 +1,10 @@
+[project]
+name = "databricks-retail-lakehouse-azure"
+version = "0.1.0"
+requires-python = ">=3.10"
+description = "End-to-end Databricks data engineering demo on Azure with UC and ADLS Gen2"
+readme = "README.md"
+authors = [{ name = "Your Name" }]
+
+[tool.pytest.ini_options]
+addopts = "-q"
